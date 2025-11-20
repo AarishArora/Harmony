@@ -97,7 +97,8 @@ export default function Login() {
           <div className="login-right">
             <button type="button" className="btn-google"
               onClick={()=> {
-                window.location.href = `${Auth_Api}/api/auth/google`
+                window.location.href = `${Auth_Api}/api/auth/google?redirect=/`;
+
               }}
             >
               <FcGoogle size={20} />
