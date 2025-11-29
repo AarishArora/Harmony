@@ -17,16 +17,9 @@ function ArtistDashboard() {
   ]
 
   const [musics, setMusics] = useState([
-    { title: 'Midnight Echoes', artist: 'You', plays: '12,450', duration: '3:42', released: '2024-11-10' },
-    { title: 'Golden Skies', artist: 'You', plays: '9,803', duration: '4:05', released: '2025-01-02' },
-    { title: 'Fading Lights', artist: 'You', plays: '15,221', duration: '2:58', released: '2024-09-28' },
-    { title: 'Ocean Drift', artist: 'You', plays: '4,311', duration: '3:15', released: '2025-02-14' },
-    { title: 'Solstice', artist: 'You', plays: '8,765', duration: '3:05', released: '2025-03-01' }
   ]) 
 
   const [playlists, setPlaylists] = useState([
-    { name: 'Chill Vibes', musics: 3, followers: '3,200', updated: 'Updated 2d ago' },
-    { name: 'Focus Beats', musics: 3, followers: '5,120', updated: 'Updated 5d ago' }
   ])
 
   const [isSelectMode, setIsSelectMode] = useState(false);
