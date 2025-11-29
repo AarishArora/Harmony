@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-
 export default function Login() {
 
   const Auth_Api = import.meta.env.VITE_AUTH_URL;
@@ -36,13 +35,9 @@ export default function Login() {
       }, {
         withCredentials: true
       }).then( res => {
-        if(res.data.token) {
-          localStorage.setItem('token', res.data.token)
-          localStorage.setItem('user', JSON.stringify(res.data.user))
-          // Dispatch custom event to notify Navbar of auth change
-          window.dispatchEvent(new Event('authChange'))
-          navigate("/")
-        }
+        // Dispatch custom event to notify Navbar of auth change
+        window.dispatchEvent(new Event('authChange'))
+        navigate("/")
       })
 
     } catch (error) {

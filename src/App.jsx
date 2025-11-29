@@ -11,21 +11,19 @@ import Navbar from './components/Navbar'
 
 function App() {
   useEffect(() => {
-    // Check for token and user in URL query parameters (from Google OAuth redirect)
+    // Google OAuth callback - token is already set as httpOnly cookie
+    // Just clean up URL and notify app of auth change
     const params = new URLSearchParams(window.location.search)
     const token = params.get('token')
-    const user = params.get('user')
 
-    if (token && user) {
+    if (token) {
       try {
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', user)
         // Dispatch custom event to notify Navbar of auth change
         window.dispatchEvent(new Event('authChange'))
         // Clean up URL
         window.history.replaceState({}, document.title, window.location.pathname)
       } catch (e) {
-        console.error('Error setting auth from URL params:', e)
+        console.error('Error during auth callback:', e)
       }
     }
   }, [])

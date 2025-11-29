@@ -28,11 +28,8 @@ function MusicPlayerDetail() {
   useEffect(() => {
     const fetchMusic = async () => {
       try {
-        const token = localStorage.getItem('token');
         const response = await fetch(`${Music_Api}/api/music/get-details/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: 'include',
         });
 
         if (!response.ok) {
@@ -70,11 +67,8 @@ function MusicPlayerDetail() {
   const fetchPlaylists = async () => {
     setLoadingPlaylists(true);
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch(`${Music_Api}/api/music/playlist`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -95,13 +89,12 @@ function MusicPlayerDetail() {
   // Add music to playlist
   const handleAddToPlaylist = async (playlistId) => {
     try {
-      const token = localStorage.getItem('token');
       const response = await fetch(`${Music_Api}/api/music/playlist/add-music`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({
           playlistId,
           musicId: id,

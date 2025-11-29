@@ -14,7 +14,6 @@ const SearchResults = () => {
   const [error, setError] = useState(null)
   const navigate = useNavigate()
   const query = searchParams.get('q')
-  const token = localStorage.getItem('token')
 
   useEffect(() => {
     if (query) {
@@ -29,10 +28,6 @@ const SearchResults = () => {
 
       const response = await axios.get(`${Music_Api}/api/music/search`, {
         params: { query: searchQuery },
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
         withCredentials: true
       })
 

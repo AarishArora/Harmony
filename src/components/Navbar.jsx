@@ -13,23 +13,12 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Check if user is logged in by checking for token in localStorage or cookies
+    // Check if user is logged in by checking cookies
     const checkAuthStatus = () => {
-      let token = localStorage.getItem('token')
-      
-      // If no token in localStorage, check if it's in cookies (from Google OAuth redirect)
-      if (!token) {
-        token = getCookie('token')
-        if (token) {
-          localStorage.setItem('token', token)
-        }
-      }
-      
-      const userData = localStorage.getItem('user')
+      // Token is automatically sent in requests with credentials: include
+      // Just check if we can read the cookie to display UI
+      const token = getCookie('token')
       setIsLoggedIn(!!token)
-      if(userData) {
-        setUser(JSON.parse(userData))
-      }
     }
 
     checkAuthStatus()
@@ -39,19 +28,10 @@ const Navbar = () => {
       checkAuthStatus()
     }
 
-    // Listen for localStorage changes (works when redirect happens from Google OAuth)
-    const handleStorageChange = (e) => {
-      if (e.key === 'token' || e.key === 'user') {
-        checkAuthStatus()
-      }
-    }
-
     window.addEventListener('authChange', handleAuthChange)
-    window.addEventListener('storage', handleStorageChange)
     
     return () => {
       window.removeEventListener('authChange', handleAuthChange)
-      window.removeEventListener('storage', handleStorageChange)
     }
   }, [])
 
@@ -73,8 +53,6 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
     setIsLoggedIn(false)
     setUser(null)
     closeMenu()

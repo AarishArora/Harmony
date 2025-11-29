@@ -50,8 +50,6 @@ export default function Register() {
     })
 
     if(response.data.token) {
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('user', JSON.stringify(response.data.user))
       // Dispatch custom event to notify Navbar of auth change
       window.dispatchEvent(new Event('authChange'))
       navigate("/")

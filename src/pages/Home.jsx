@@ -39,10 +39,6 @@ const Home = () => {
 
         // Fetch musics
         const musicsResponse = await axios.get(`${Music_Api}/api/music`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
           withCredentials: true
         })
 
@@ -56,10 +52,6 @@ const Home = () => {
 
         // Fetch playlists
         const playlistsResponse = await axios.get(`${Music_Api}/api/music/playlist`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
           withCredentials: true
         })
 
@@ -97,10 +89,6 @@ const Home = () => {
           musics: []
         },
         {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
           withCredentials: true
         }
       )
@@ -136,10 +124,6 @@ const Home = () => {
           title: editingPlaylistName
         },
         {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
           withCredentials: true
         }
       )
@@ -177,10 +161,6 @@ const Home = () => {
 
     try {
       const response = await axios.delete(`${Music_Api}/api/music/playlist/${playlistId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
         withCredentials: true
       })
 
@@ -202,10 +182,6 @@ const Home = () => {
     try {
       setLoadingPlaylistSongs(true)
       const response = await axios.get(`${Music_Api}/api/music/playlist/${playlist._id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
         withCredentials: true
       })
 
