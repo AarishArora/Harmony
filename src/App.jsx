@@ -7,17 +7,23 @@ import ArtistDashboard from './pages/ArtistDashboard'
 import UploadMusic from './pages/UploadMusic'
 import MusicPlayerDetail from './pages/MusicPlayerDetail'
 import SearchResults from './pages/SearchResults'
+import GoogleCallback from './pages/GoogleCallback'
 import Navbar from './components/Navbar'
 
 function App() {
   useEffect(() => {
-    // Google OAuth callback - token is already set as httpOnly cookie
-    // Just clean up URL and notify app of auth change
+    // Google OAuth callback - token is now stored in localStorage
     const params = new URLSearchParams(window.location.search)
     const token = params.get('token')
 
     if (token) {
       try {
+        // Store token in localStorage
+        localStorage.setItem('token', token)
+        // Update axios default headers
+        import('axios').then(axiosModule => {
+          axiosModule.default.defaults.headers.common.Authorization = `Bearer ${token}`
+        })
         // Dispatch custom event to notify Navbar of auth change
         window.dispatchEvent(new Event('authChange'))
         // Clean up URL
@@ -40,6 +46,7 @@ function App() {
           <Route path="/artist/dashboard" element={<ArtistDashboard />} />
           <Route path="/artist/dashboard/upload-music" element={<UploadMusic />} />
           <Route path="/music/:id" element={<MusicPlayerDetail />} />
+          <Route path="/auth/google/callback" element={<GoogleCallback />} />
         </Routes>
 
       </div>

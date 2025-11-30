@@ -27,8 +27,7 @@ const SearchResults = () => {
       setError(null)
 
       const response = await axios.get(`${Music_Api}/api/music/search`, {
-        params: { query: searchQuery },
-        withCredentials: true
+        params: { query: searchQuery }
       })
 
       setSearchResults(response.data.musics.map(m => ({

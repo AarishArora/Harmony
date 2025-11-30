@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CiSearch } from 'react-icons/ci'
 import { HiMenu, HiX } from 'react-icons/hi'
-import { getCookie } from '../utils/cookieUtils'
 import './Navbar.css'
 
 const Navbar = () => {
@@ -13,11 +12,9 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Check if user is logged in by checking cookies
+    // Check if user is logged in by checking localStorage
     const checkAuthStatus = () => {
-      // Token is automatically sent in requests with credentials: include
-      // Just check if we can read the cookie to display UI
-      const token = getCookie('token')
+      const token = localStorage.getItem('token')
       setIsLoggedIn(!!token)
     }
 
@@ -29,9 +26,11 @@ const Navbar = () => {
     }
 
     window.addEventListener('authChange', handleAuthChange)
+    window.addEventListener('tokenUpdated', handleAuthChange)
     
     return () => {
       window.removeEventListener('authChange', handleAuthChange)
+      window.removeEventListener('tokenUpdated', handleAuthChange)
     }
   }, [])
 
@@ -53,6 +52,8 @@ const Navbar = () => {
   }
 
   const handleLogout = () => {
+    localStorage.removeItem('token')
+    delete window.axios?.defaults?.headers?.common?.Authorization
     setIsLoggedIn(false)
     setUser(null)
     closeMenu()

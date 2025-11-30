@@ -38,9 +38,7 @@ const Home = () => {
         setError(null)
 
         // Fetch musics
-        const musicsResponse = await axios.get(`${Music_Api}/api/music`, {
-          withCredentials: true
-        })
+        const musicsResponse = await axios.get(`${Music_Api}/api/music`)
 
         setMusics(musicsResponse.data.musics.map(m => ({
           id: m._id,
@@ -51,9 +49,7 @@ const Home = () => {
         })))
 
         // Fetch playlists
-        const playlistsResponse = await axios.get(`${Music_Api}/api/music/playlist`, {
-          withCredentials: true
-        })
+        const playlistsResponse = await axios.get(`${Music_Api}/api/music/playlist`)
 
         setPlaylists(playlistsResponse.data.playlists || [])
 
@@ -87,9 +83,6 @@ const Home = () => {
         {
           title: "My Favourite",
           musics: []
-        },
-        {
-          withCredentials: true
         }
       )
 
@@ -122,9 +115,6 @@ const Home = () => {
       const response = await axios.put(`${Music_Api}/api/music/playlist/${playlistId}`, 
         {
           title: editingPlaylistName
-        },
-        {
-          withCredentials: true
         }
       )
 
@@ -160,9 +150,7 @@ const Home = () => {
     }
 
     try {
-      const response = await axios.delete(`${Music_Api}/api/music/playlist/${playlistId}`, {
-        withCredentials: true
-      })
+      const response = await axios.delete(`${Music_Api}/api/music/playlist/${playlistId}`)
 
       if (response.status === 200) {
         setPlaylists(playlists.filter(p => p._id !== playlistId))
@@ -181,9 +169,7 @@ const Home = () => {
   const handlePlaylistClick = async (playlist) => {
     try {
       setLoadingPlaylistSongs(true)
-      const response = await axios.get(`${Music_Api}/api/music/playlist/${playlist._id}`, {
-        withCredentials: true
-      })
+      const response = await axios.get(`${Music_Api}/api/music/playlist/${playlist._id}`)
 
       if (response.status === 200) {
         setSelectedPlaylist(playlist)

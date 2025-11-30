@@ -45,11 +45,13 @@ export default function Register() {
       },
       password: formData.password,
       role: formData.role
-    }, {
-      withCredentials: true,
     })
 
     if(response.data.token) {
+      // Store token in localStorage
+      localStorage.setItem('token', response.data.token)
+      // Update axios default headers
+      axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
       // Dispatch custom event to notify Navbar of auth change
       window.dispatchEvent(new Event('authChange'))
       navigate("/")

@@ -32,9 +32,13 @@ export default function Login() {
       axios.post(`${Auth_Api}/api/auth/login`, {
         email:formData.email,
         password: formData.password
-      }, {
-        withCredentials: true
       }).then( res => {
+        // Store token in localStorage
+        if (res.data.token) {
+          localStorage.setItem('token', res.data.token)
+          // Update axios default headers
+          axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
+        }
         // Dispatch custom event to notify Navbar of auth change
         window.dispatchEvent(new Event('authChange'))
         navigate("/")

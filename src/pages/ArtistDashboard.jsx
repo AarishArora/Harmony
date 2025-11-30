@@ -26,9 +26,7 @@ function ArtistDashboard() {
   const [selectedMusics, setSelectedMusics] = useState(new Set());
 
   useEffect(()=> {
-    axios.get(`${Music_Api}/api/music/artist-musics`,{
-        withCredentials: true
-    })
+    axios.get(`${Music_Api}/api/music/artist-musics`)
     .then(res=> {
         setMusics(res.data.musics.map(m=> ({
             id: m._id,
@@ -42,7 +40,7 @@ function ArtistDashboard() {
         })));
     })
 
-    axios.get(`${Music_Api}/api/music/playlist/artist`, { withCredentials: true })
+    axios.get(`${Music_Api}/api/music/playlist/artist`)
             .then(res => {
                 setPlaylists(res.data.playlists.map(p => ({
                     id: p._id,
@@ -75,9 +73,7 @@ function ArtistDashboard() {
 
     try {
       for (const musicId of selectedMusics) {
-        await axios.delete(`${Music_Api}/api/music/${musicId}`, {
-          withCredentials: true
-        });
+        await axios.delete(`${Music_Api}/api/music/${musicId}`);
       }
       // Remove deleted musics from state
       setMusics(musics.filter(music => !selectedMusics.has(music.id)));

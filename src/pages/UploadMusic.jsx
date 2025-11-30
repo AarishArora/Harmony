@@ -146,7 +146,6 @@ function UploadMusic() {
         `${Music_Api}/api/music/upload`,
         uploadFormData,
         {
-          withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data'
           }
