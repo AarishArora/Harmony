@@ -22,39 +22,40 @@ export default function Login() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault()
     // console.log('Form submitted:', formData)
     
     try {
-      
-      axios.post(`${Auth_Api}/api/auth/login`, {
+      const res = await axios.post(`${Auth_Api}/api/auth/login`, {
         email: formData.email,
         password: formData.password
-      }).then(res => {
-
-        // store token
-        if (res.data.token) {
-          localStorage.setItem('token', res.data.token)
-          axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
-        }
-
-        // store user (THIS WAS MISSING)
-        if (res.data.user) {
-          localStorage.setItem('user', JSON.stringify(res.data.user))
-        }
-
-        // notify navbar
-        window.dispatchEvent(new Event('tokenUpdated'))
-
-        navigate("/")
       })
 
+      console.log("LOGIN RESPONSE:", res.data)
 
-    } catch (error) {
-        console.log("Error during login:", error)
+      // store token
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token)
+        axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
+      }
+
+      // store user
+      if (res.data.user) {
+        localStorage.setItem('user', JSON.stringify(res.data.user))
+      }
+
+      // notify navbar
+      window.dispatchEvent(new Event('tokenUpdated'))
+
+      navigate("/")
+
+    } 
+    catch (error) {
+        console.log("Login Error:", error)
     }
+
 
   }
 
