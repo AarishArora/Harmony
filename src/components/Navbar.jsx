@@ -59,6 +59,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     delete window.axios?.defaults?.headers?.common?.Authorization
     setIsLoggedIn(false)
     setUser(null)
