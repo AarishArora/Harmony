@@ -14,8 +14,14 @@ const Navbar = () => {
   useEffect(() => {
     // Check if user is logged in by checking localStorage
     const checkAuthStatus = () => {
-      const token = localStorage.getItem('token')
-      setIsLoggedIn(!!token)
+    const token = localStorage.getItem('token')
+    const storedUser = localStorage.getItem('user')
+
+    setIsLoggedIn(!!token)
+
+      if (storedUser) {
+        setUser(JSON.parse(storedUser))
+      }
     }
 
     checkAuthStatus()
@@ -25,12 +31,12 @@ const Navbar = () => {
       checkAuthStatus()
     }
 
-    window.addEventListener('authChange', handleAuthChange)
     window.addEventListener('tokenUpdated', handleAuthChange)
+    window.addEventListener('authChange', handleAuthChange)
     
     return () => {
-      window.removeEventListener('authChange', handleAuthChange)
       window.removeEventListener('tokenUpdated', handleAuthChange)
+      window.removeEventListener('authChange', handleAuthChange)
     }
   }, [])
 

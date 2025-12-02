@@ -30,19 +30,27 @@ export default function Login() {
     try {
       
       axios.post(`${Auth_Api}/api/auth/login`, {
-        email:formData.email,
+        email: formData.email,
         password: formData.password
-      }).then( res => {
-        // Store token in localStorage
+      }).then(res => {
+
+        // store token
         if (res.data.token) {
           localStorage.setItem('token', res.data.token)
-          // Update axios default headers
           axios.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
         }
-        // Dispatch custom event to notify Navbar of auth change
-        window.dispatchEvent(new Event('authChange'))
+
+        // store user (THIS WAS MISSING)
+        if (res.data.user) {
+          localStorage.setItem('user', JSON.stringify(res.data.user))
+        }
+
+        // notify navbar
+        window.dispatchEvent(new Event('tokenUpdated'))
+
         navigate("/")
       })
+
 
     } catch (error) {
         console.log("Error during login:", error)
