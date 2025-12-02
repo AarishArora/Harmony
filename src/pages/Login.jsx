@@ -33,8 +33,6 @@ export default function Login() {
         password: formData.password
       })
 
-      console.log("LOGIN RESPONSE:", res.data)
-
       // store token
       if (res.data.token) {
         localStorage.setItem('token', res.data.token)
